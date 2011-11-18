@@ -2,10 +2,10 @@ def migration_list(migrations)
   migrations.group_by do |migration|
     migration.split('/').first
   end.map do |(app, migration)|
-    present = migration.sort_by do |a|
-      a.split('_').first.to_i
-    end.first
-    app + ' ' + pad(present.split('/').last.split('_').first.to_i.pred)
+    present = migration.map do |a|
+      a.split('/').last.split('_').first.to_i
+    end.min
+    app + ' ' + pad(present.pred)
   end
 end
 
