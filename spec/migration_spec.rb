@@ -1,15 +1,11 @@
-def migration_list(m)
-#  ['app2 0003']
-  blah = m.group_by do |x|
-    x.split('/').first
-  end
-  blah.map do |(x, y)|
-    present = y.sort_by do |a|
+def migration_list(migrations)
+  migrations.group_by do |migration|
+    migration.split('/').first
+  end.map do |(app, migration)|
+    present = migration.sort_by do |a|
       a.split('_').first.to_i
     end.first
-#    y.find do |a|
-#    end
-    [x, pad(present.split('/').last.split('_').first.to_i.pred)].join(' ')
+    app + ' ' + pad(present.split('/').last.split('_').first.to_i.pred)
   end
 end
 
